@@ -16,7 +16,7 @@ import Image from "next/image"
 import DrawerBody from "./DrawerBody"
 
 
-const DrawerComponent = ({ children }: { children: React.ReactNode }) => {
+const DrawerComponent = ({ children, statusSelected = "Not Selected" }: { children: React.ReactNode, statusSelected?: string }) => {
 
     return (
         <Drawer direction="right">
@@ -49,7 +49,7 @@ const DrawerComponent = ({ children }: { children: React.ReactNode }) => {
                         </DrawerTitle>
                     </div>
 
-                    <DrawerBody />
+                    <DrawerBody statusSelected={statusSelected} />
 
                 </div>
             </DrawerContent>

@@ -1,16 +1,17 @@
 import SideMenu from "@/components/CustomComponents/SideMenu";
-import { BadgeInfo, Plus, Search } from "lucide-react";
+import { BadgeInfo, Clock, Plus, Search } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import DrawerComponent from "@/components/CustomComponents/DrawerComponents/Drawer";
 import { BannerTask, filterOption } from "@/lib/Menu";
-
+import drawar from "@/../public/drawar.svg"
+import TodoCard from "@/components/CustomComponents/TodoCard";
 
 export default function Home() {
   return (
-    <div className="flex w-screen h-screen">
+    <div className="flex w-auto min-h-screen ">
       <SideMenu />
-      <div className="px-4 py-6 bg-[#DEDEDE] w-full flex flex-col  gap-4">
+      <div className="px-4 py-6 bg-[#DEDEDE] w-full flex flex-col gap-4">
         {/* Top Header  */}
         <div className=" flex justify-between items-center">
           <h1 className="text-5xl font-semibold">Good morning, Joe!</h1>
@@ -59,7 +60,65 @@ export default function Home() {
           </div>
         </div>
 
+        <div className="w-full h-full bg-white rounded-md grid grid-cols-4 p-4 gap-4">
+          {/* To do */}
+          <div className="flex flex-col gap-4">
+            <div className="text-[#555555] flex items-center justify-between">
+              <h1 className="text-xl">To do</h1>
+              <Image src={drawar} alt="Drawar" />
+            </div>
+            <TodoCard />
+            <div>
+              <DrawerComponent statusSelected={"To do"} >
+                <Button className="w-full text-[#E3E1E1] flex items-center justify-between ">Add new <span className='ms-2 rounded-full'><Plus color="#E3E1E1" size={20} /></span></Button>
+              </DrawerComponent>
+            </div>
+          </div>
+          {/* In progress  */}
+          <div className="flex flex-col gap-4">
+            <div className="text-[#555555] flex items-center justify-between">
+              <h1 className="text-xl">In progress</h1>
+              <Image src={drawar} alt="Drawar" />
+            </div>{
+              Array.from({ length: 2 }).map((_, index) => (
+                <TodoCard />
+              ))
+            }
+            <div>
 
+              <DrawerComponent statusSelected={"To do"} >
+                <Button className="w-full text-[#E3E1E1] flex items-center justify-between ">Add new <span className='ms-2 rounded-full'><Plus color="#E3E1E1" size={20} /></span></Button>
+              </DrawerComponent>
+            </div>
+          </div>
+          {/* Under Review  */}
+          <div className="flex flex-col gap-4">
+            <div className="text-[#555555] flex items-center justify-between">
+              <h1 className="text-xl">Under Review</h1>
+              <Image src={drawar} alt="Drawar" />
+            </div>
+            <TodoCard />
+            <div>
+              <DrawerComponent statusSelected={"To do"} >
+                <Button className="w-full text-[#E3E1E1] flex items-center justify-between ">Add new <span className='ms-2 rounded-full'><Plus color="#E3E1E1" size={20} /></span></Button>
+              </DrawerComponent>
+            </div>
+          </div>
+          {/* Finished  */}
+          <div className="flex flex-col gap-4">
+            <div className="text-[#555555] flex items-center justify-between">
+              <h1 className="text-xl">Finished</h1>
+              <Image src={drawar} alt="Drawar" />
+            </div>
+            <TodoCard />
+            <div>
+              <DrawerComponent statusSelected={"To do"} >
+                <Button className="w-full text-[#E3E1E1] flex items-center justify-between ">Add new <span className='ms-2 rounded-full'><Plus color="#E3E1E1" size={20} /></span></Button>
+              </DrawerComponent>
+            </div>
+          </div>
+
+        </div>
       </div>
     </div >
   )
