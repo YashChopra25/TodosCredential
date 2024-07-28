@@ -1,51 +1,11 @@
 import SideMenu from "@/components/CustomComponents/SideMenu";
-import { BadgeInfo, Calendar, Filter, Search, Share2, Sparkles } from "lucide-react";
-import introduction_tags from '@/../public/introduction_tags.svg'
-import anywhere_access from '@/../public/anywhere_access.svg'
-import share_notes from '@/../public/share_notes.svg'
+import { BadgeInfo, Plus, Search } from "lucide-react";
 import Image from "next/image";
-import { title } from "process";
 import { Button } from "@/components/ui/button";
+import DrawerComponent from "@/components/CustomComponents/DrawerComponents/Drawer";
+import { BannerTask, filterOption } from "@/lib/Menu";
 
-const BannerTask: {
-  imageurl: any;
-  title: string;
-  description: string;
-}[] = [
-    {
-      imageurl: introduction_tags,
-      title: "Introducing tags",
-      description: "Easily categorize and find your notes by adding tags. Keep your workspace clutter-free and efficient."
-    },
-    {
-      imageurl: share_notes,
-      title: "Share Notes Instantly",
-      description: "Effortlessly share your notes with others via email or link. Enhance collaboration with quick sharing options."
-    },
-    {
-      imageurl: anywhere_access,
-      title: "Access Anywhere",
-      description: "Sync your notes across all devices. Stay productive whether you're on your phone, tablet, or computer."
-    },
-  ]
-const filterOption = [
-  {
-    icons: <Calendar />,
-    title: "Calendar view"
-  },
-  {
-    icons: <Sparkles />,
-    title: "Automation"
-  },
-  {
-    icons: <Filter />,
-    title: "Filter"
-  },
-  {
-    icons: <Share2 />,
-    title: "Share"
-  },
-]
+
 export default function Home() {
   return (
     <div className="flex w-screen h-screen">
@@ -87,21 +47,20 @@ export default function Home() {
 
             {
               filterOption?.map((filter, index) => (
-
-                <div className="text-[#797979] flex gap-3" key={`${filter.title}-${index}`}>
+                <div className="text-[#797979] flex gap-3" key={`${filter.title}-${index}`} >
                   <p className="text-base ">{filter.title}</p>
                   {filter.icons}
                 </div>
               ))
             }
-
-
-            <Button className="bg-[#4C38C2]">Create new <span className="ms-3 bg-white text-lg w-5 h-5 rounded-full text-black flex items-center justify-center">+</span></Button>
+            <DrawerComponent >
+              <Button className="bg-[#2F2188] hover:bg-[#4C38C2]">Create new <span className='ms-2 bg-white rounded-full'><Plus color="#4C38C2" size={20} /></span></Button>
+            </DrawerComponent>
           </div>
         </div>
 
 
       </div>
     </div >
-  );
+  )
 }

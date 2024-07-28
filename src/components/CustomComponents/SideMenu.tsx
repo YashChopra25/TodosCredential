@@ -4,9 +4,10 @@ import profile from '@/../public/profile.svg'
 import Image from 'next/image'
 import React from 'react'
 import { Button } from '../ui/button'
-import { Bell, ChevronsRight, Loader } from 'lucide-react'
+import { Bell, ChevronsRight, Loader, Plus } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { Menu } from "@/lib/Menu"
+import DrawerComponent from './DrawerComponents/Drawer'
 const SideMenu = () => {
     const router = useRouter()
     const Logout = () => {
@@ -35,6 +36,9 @@ const SideMenu = () => {
                             </div>
                         })
                     }
+                    <DrawerComponent >
+                        <Button className="bg-[#2F2188] hover:bg-[#4C38C2] text-lg">Create new task <span className='ms-2 bg-white rounded-full'><Plus color="#4C38C2" size={20} /></span></Button>
+                    </DrawerComponent>
                 </div>
             </div>
             <div className='bg-[#F3F3F3] flex w-full '>
