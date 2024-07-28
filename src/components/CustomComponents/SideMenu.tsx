@@ -1,0 +1,52 @@
+'use client'
+import DownloadBtn from '@/../public/DownloadButton.svg'
+import profile from '@/../public/profile.svg'
+import Image from 'next/image'
+import React from 'react'
+import { Button } from '../ui/button'
+import { Bell, ChevronsRight, Loader } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { Menu } from "@/lib/Menu"
+const SideMenu = () => {
+    const router = useRouter()
+    const Logout = () => {
+        router.push("/signin")
+    }
+    return (
+        <div className='px-4 py-6 flex flex-col justify-between'>
+            <div className='flex flex-col gap-3'>
+                <div className='flex items-center justify-normal gap-2'>
+                    <Image src={profile} alt='profile' className='rounded-full' />
+                    <p className='text-xl font-semibold'> Joe Gardner</p>
+                </div>
+                <div className='flex items-center justify-between gap-2'>
+                    <Bell />
+                    <Loader />
+                    <ChevronsRight />
+                    <Button variant={"secondary"} className='bg-[#F4F4F4]' onClick={Logout}>Logout</Button>
+                </div>
+
+                <div className='flex flex-col gap-2'>
+                    {
+                        Menu?.map((item, index) => {
+                            return <div className={`${index == 0 ? "bg-[#F4F4F4]" : ""} p-2 flex items-center justify-normal gap-3 hover:bg-[#F4F4F4] border border-[#DDDDDD] text-[#797979] cursor-pointer`} key={item.name}>
+                                {item.icons}
+                                <p className='text-xl'>{item.name}</p>
+                            </div>
+                        })
+                    }
+                </div>
+            </div>
+            <div className='bg-[#F3F3F3] flex w-full '>
+
+                <Image src={DownloadBtn} alt='downlaod-btn' />
+                <div className='w-60 py-2 text-[#666666]'>
+                    <h3 className='text-xl font-semibold'>Download the app</h3>
+                    <p className='text-sm'>Get the full experience </p>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default SideMenu
