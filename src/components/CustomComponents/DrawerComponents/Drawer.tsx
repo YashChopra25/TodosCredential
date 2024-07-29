@@ -7,8 +7,7 @@ import {
     Drawer,
     DrawerClose,
     DrawerContent,
-    DrawerFooter,
-    DrawerHeader,
+    DrawerDescription,
     DrawerTitle,
     DrawerTrigger,
 } from "@/components/ui/drawer"
@@ -17,9 +16,8 @@ import DrawerBody from "./DrawerBody"
 
 
 const DrawerComponent = ({ children, statusSelected = "Not Selected" }: { children: React.ReactNode, statusSelected?: string }) => {
-
     return (
-        <Drawer direction="right">
+        <Drawer direction="right" >
             <DrawerTrigger asChild>
                 {children}
             </DrawerTrigger>
@@ -47,6 +45,7 @@ const DrawerComponent = ({ children, statusSelected = "Not Selected" }: { childr
                             </div>
 
                         </DrawerTitle>
+                        <DrawerDescription></DrawerDescription>
                     </div>
 
                     <DrawerBody statusSelected={statusSelected} />

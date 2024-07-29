@@ -80,7 +80,7 @@ const HomePage = () => {
                             ))
                         }
                         <div>
-                            <DrawerComponent statusSelected={"To do"} >
+                            <DrawerComponent statusSelected={"to_do"} >
                                 <Button className="w-full text-[#E3E1E1] flex items-center justify-between ">Add new <span className='ms-2 rounded-full'><Plus color="#E3E1E1" size={20} /></span></Button>
                             </DrawerComponent>
                         </div>
@@ -98,7 +98,7 @@ const HomePage = () => {
                         }
                         <div>
 
-                            <DrawerComponent statusSelected={"To do"} >
+                            <DrawerComponent statusSelected={"in_progress"} >
                                 <Button className="w-full text-[#E3E1E1] flex items-center justify-between ">Add new <span className='ms-2 rounded-full'><Plus color="#E3E1E1" size={20} /></span></Button>
                             </DrawerComponent>
                         </div>
@@ -115,7 +115,7 @@ const HomePage = () => {
                             ))
                         }
                         <div>
-                            <DrawerComponent statusSelected={"To do"} >
+                            <DrawerComponent statusSelected={"under_review"} >
                                 <Button className="w-full text-[#E3E1E1] flex items-center justify-between ">Add new <span className='ms-2 rounded-full'><Plus color="#E3E1E1" size={20} /></span></Button>
                             </DrawerComponent>
                         </div>
@@ -132,7 +132,7 @@ const HomePage = () => {
                             ))
                         }
                         <div>
-                            <DrawerComponent statusSelected={"To do"} >
+                            <DrawerComponent statusSelected={"finished"} >
                                 <Button className="w-full text-[#E3E1E1] flex items-center justify-between ">Add new <span className='ms-2 rounded-full'><Plus color="#E3E1E1" size={20} /></span></Button>
                             </DrawerComponent>
                         </div>

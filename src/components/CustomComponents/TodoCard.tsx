@@ -4,7 +4,7 @@ import { Clock } from 'lucide-react'
 import React from 'react'
 
 const TodoCard = ({ createdAt, date, id, description, priority, title }: { createdAt: string, date: string, id: string, description: string, priority: "low" | "medium" | "urgent", title: string }) => {
-    const FormattedDate = format(date, "yyyy-MM-dd");
+    const FormattedDate = date ? format(date, "yyyy-MM-dd") : "";
     const duration = timeSince(createdAt);
     const bgColorPeriority = priority == "low" ? "bg-[#0ECC5A]" : priority == "medium" ? "bg-[#FFA235]" : "bg-[#FF6B6B]"
     return (

@@ -19,22 +19,28 @@ import {
 } from "@/components/ui/popover"
 import { DrawerFooter, DrawerClose } from '@/components/ui/drawer'
 import { Button } from '@/components/ui/button'
+import { useDispatch } from 'react-redux'
+import { addTask } from '@/lib/features/app-slice'
+import { toast } from 'sonner'
 
 interface tododetailType {
     deadline: string | undefined;
     description: string;
     priority: string;
     status: string
+    title: string
 
 }
 const DrawerBody = ({ statusSelected = "Not Selected" }: { statusSelected?: string }) => {
     const [tododetail, settododetail] = useState<tododetailType>({
         status: statusSelected,
         priority: "Not Selected",
-        deadline: undefined,
-        description: ""
+        deadline: "",
+        description: "",
+        title: ""
 
     })
+    const dispatch = useDispatch()
     const HandleOnChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         settododetail((prev) => {
@@ -43,15 +49,29 @@ const DrawerBody = ({ statusSelected = "Not Selected" }: { statusSelected?: stri
             }
         })
     }
-    const HandleSubmit = () => {
-        console.log(tododetail)
+    const HandleSubmit = async () => {
+        console.log(tododetail);
+        if (tododetail.title.length == 0) {
+            toast.error(`Title is mandatory field`, {
+                position: "top-right"
+            })
+            return;
+        }
+        if (tododetail.status == "Not Selected") {
+            toast.error(`Status is mandatory field`, {
+                position: "top-right"
+            })
+            return;
+        }
+        console.log("bypass")
+        dispatch(addTask(tododetail))
     }
     return (
         <React.Fragment>
 
 
             <div className="w-full flex flex-col gap-7">
-                <input type="text" name="" id="" className="w-full text-5xl font-semibold text-[#CCCCCC] ps-1 focus:outline-[#CCCCCC]" placeholder="Title" />
+                <input type="text" name="title" id="title" className="w-full text-5xl font-semibold text-[#CCCCCC] ps-1 focus:outline-[#CCCCCC]" placeholder="Title" onChange={HandleOnChange} />
                 <div className='flex flex-col gap-8'>
                     <div className='flex items-center gap-16 text-[#666666]'>
                         <div className='flex items-center gap-6'><Loader size={20} color="#666666" />Status</div>
@@ -62,8 +82,8 @@ const DrawerBody = ({ statusSelected = "Not Selected" }: { statusSelected?: stri
                                 }
                             })
                         }}>
-                            <SelectTrigger className="w-[180px]" >
-                                <SelectValue placeholder={tododetail.status} />
+                            <SelectTrigger className="w-[180px]" defaultValue={tododetail.status} >
+                                <SelectValue placeholder={tododetail.status.split("_").join(" ")} defaultValue={tododetail.status} />
                             </SelectTrigger>
                             <SelectContent >
                                 <SelectItem value="to_do">To do</SelectItem>
@@ -138,3 +158,7 @@ const DrawerBody = ({ statusSelected = "Not Selected" }: { statusSelected?: stri
 }
 
 export default DrawerBody
+
+function dispatch(arg0: { payload: any; type: "app/addTodoTask" }) {
+    throw new Error('Function not implemented.')
+}
