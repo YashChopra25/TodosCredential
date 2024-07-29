@@ -8,7 +8,7 @@ import { Bell, ChevronsRight, Loader, Plus } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { Menu } from "@/lib/Menu"
 import DrawerComponent from './DrawerComponents/Drawer'
-const SideMenu = () => {
+const SideMenu = ({ name }: { name: string }) => {
     const router = useRouter()
     const Logout = () => {
         router.push("/signin")
@@ -18,7 +18,7 @@ const SideMenu = () => {
             <div className='flex flex-col gap-3'>
                 <div className='flex items-center justify-normal gap-2'>
                     <Image src={profile} alt='profile' className='rounded-full' />
-                    <p className='text-xl font-semibold'> Joe Gardner</p>
+                    <p className='text-xl font-semibold'>{name}</p>
                 </div>
                 <div className='flex items-center justify-between gap-2'>
                     <Bell />

@@ -19,16 +19,18 @@ import {
 } from "@/components/ui/popover"
 import { DrawerFooter, DrawerClose } from '@/components/ui/drawer'
 import { Button } from '@/components/ui/button'
+
 interface tododetailType {
     deadline: string | undefined;
-    status: string;
-    priority: string;
     description: string;
+    priority: string;
+    status: string
+
 }
 const DrawerBody = ({ statusSelected = "Not Selected" }: { statusSelected?: string }) => {
     const [tododetail, settododetail] = useState<tododetailType>({
         status: statusSelected,
-        priority: "",
+        priority: "Not Selected",
         deadline: undefined,
         description: ""
 
@@ -74,7 +76,22 @@ const DrawerBody = ({ statusSelected = "Not Selected" }: { statusSelected?: stri
                     </div>
                     <div className='flex items-center gap-16 text-[#666666]'>
                         <div className='flex items-center gap-6'><Image src={priority} alt='priority' /> Priority</div>
-                        <input type="text" name='priority' className='p-1 w-[180px] text-[#C1BDBD] text-base outline-none' placeholder='Not Selected' value={tododetail.priority} onChange={HandleOnChange} />
+                        <Select name='priority' onValueChange={(priority) => {
+                            settododetail((prev) => {
+                                return {
+                                    ...prev, priority: priority
+                                }
+                            })
+                        }}>
+                            <SelectTrigger className="w-[180px]" >
+                                <SelectValue placeholder={tododetail.priority} />
+                            </SelectTrigger>
+                            <SelectContent >
+                                <SelectItem value="low">Low</SelectItem>
+                                <SelectItem value="medium">Medium</SelectItem>
+                                <SelectItem value="urgent">Urgent</SelectItem>
+                            </SelectContent>
+                        </Select>
                     </div>
                     <div className='flex items-center gap-16 text-[#666666]'>
                         <div className='flex items-center gap-6'><CalenderIcon /> Deadline</div>
