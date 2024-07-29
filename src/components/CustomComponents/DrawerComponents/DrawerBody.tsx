@@ -22,15 +22,9 @@ import { Button } from '@/components/ui/button'
 import { useDispatch } from 'react-redux'
 import { addTask } from '@/lib/features/app-slice'
 import { toast } from 'sonner'
+import { tododetailType } from '@/lib/Types'
 
-interface tododetailType {
-    deadline: string | undefined;
-    description: string;
-    priority: string;
-    status: string
-    title: string
 
-}
 const DrawerBody = ({ statusSelected = "Not Selected" }: { statusSelected?: string }) => {
     const [tododetail, settododetail] = useState<tododetailType>({
         status: statusSelected,

@@ -1,28 +1,13 @@
 import { createSlice, nanoid } from "@reduxjs/toolkit";
-export interface arrayType {
-    id: string;
-    title: string;
-    description: string;
-    priority: "low" | "medium" | "urgent";
-    date: string;
-    createdAt: string;
-    status: "to_do" | "in_progress" | "under_review" | "finished"
-}
-interface initialStateType {
-    name: string,
-    email: string,
-    to_do: arrayType[],
-    in_progress: arrayType[],
-    under_review: arrayType[],
-    finished: arrayType[],
-    token: string
-}
+import { arrayType, initialStateType } from "@/lib/Types";
+
+
 const initialState: initialStateType = {
     name: "Joe Gardner",
     email: "",
     to_do: [{
         id: "789534904",
-        title: "Implement User Authentication",
+        title: "Yash",
         status: "to_do",
         description: "Develop and integrate user authentication using email and password.",
         priority: "urgent",
@@ -69,7 +54,7 @@ const initialState: initialStateType = {
     }],
     token: ""
 }
-
+let ManupulateTodo: arrayType;
 export const appSlice = createSlice({
     name: "app",
     initialState,
@@ -90,7 +75,6 @@ export const appSlice = createSlice({
                 status: "to_do",
                 title: action.payload.title
             }
-            console.log(action)
             switch (action.payload.status) {
                 case "to_do":
                     state.to_do.push(NewTodo);
@@ -108,8 +92,90 @@ export const appSlice = createSlice({
                     break;
             }
         },
+        DragTask: (state, action) => {
+            switch (action.payload.source.droppableId) {
+                case "to_do":
+                    state.to_do.map((item) => {
+                        if (item.id === action.payload.draggableId) {
+                            ManupulateTodo = { ...item }
+                        }
+                    });
+                    break;
+                case "in_progress":
+                    state.in_progress.map((item) => {
+                        if (item.id === action.payload.draggableId) {
+                            ManupulateTodo = { ...item }
+                        }
+                    });
+                    break;
+                case "under_review":
+                    state.under_review.map((item) => {
+                        if (item.id === action.payload.draggableId) {
+                            ManupulateTodo = { ...item }
+                        }
+                    });
+                    break;
+                case "finished":
+                    state.finished.map((item) => {
+                        if (item.id === action.payload.draggableId) {
+                            ManupulateTodo = { ...item }
+                        }
+                    });
+                    break;
+                default:
+                    break;
+            }
+            console.log(ManupulateTodo)
+            switch (action.payload.destination.droppableId) {
+                case "to_do":
+                    state.to_do.splice(action.payload.destination.index, 0, ManupulateTodo)
+                    break;
+                case "in_progress":
+                    state.in_progress.splice(action.payload.destination.index, 0, ManupulateTodo)
+                    break;
+                case "under_review":
+                    state.under_review.splice(action.payload.destination.index, 0, ManupulateTodo)
+                    break;
+                case "finished":
+                    state.finished.splice(action.payload.destination.index, 0, ManupulateTodo)
+                    break;
+
+                default:
+                    break;
+            }
+        },
+        removeTask: (state, action) => {
+            switch (action.payload.source.droppableId) {
+                case "to_do":
+                    state.to_do = state.to_do.filter((item) => {
+                        return item.id !== action.payload.draggableId
+                    });
+                    break;
+                case "in_progress":
+                    state.in_progress = state.in_progress.filter((item) => {
+                        return item.id !== action.payload.draggableId
+                    });
+                    break;
+                case "under_review":
+                    state.under_review = state.under_review.filter((item) => {
+
+                        return item.id !== action.payload.draggableId
+                    });
+                    break;
+                case "finished":
+                    state.finished = state.finished.filter((item) => {
+                        if (item.id == action.payload.draggableId) {
+                            ManupulateTodo = { ...item };
+                        }
+                        return item.id !== action.payload.draggableId
+                    });
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 })
 
-export const { addName, removeName, addTask } = appSlice.actions
+export const { addName, removeName, addTask, removeTask, DragTask } = appSlice.actions
 export default appSlice.reducer
