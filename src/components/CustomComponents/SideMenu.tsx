@@ -1,17 +1,45 @@
 'use client'
 import DownloadBtn from '@/../public/DownloadButton.svg'
 import profile from '@/../public/profile.svg'
-import Image from 'next/image'
 import React from 'react'
 import { Button } from '../ui/button'
 import { Bell, ChevronsRight, Loader, Plus } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { Menu } from "@/lib/Menu"
 import DrawerComponent from './DrawerComponents/Drawer'
+import axios from 'axios'
+import { toast } from 'sonner'
+import Image from 'next/image'
 const SideMenu = ({ name }: { name: string }) => {
     const router = useRouter()
-    const Logout = () => {
-        router.push("/signin")
+    const Logout = async () => {
+        console.log("called")
+        try {
+            const { data } = await axios.get("/api/logout")
+            if (data.status) {
+
+                router.push("/signin")
+                toast.success(data.message, {
+                    duration: 1000,
+                    richColors: true,
+                    closeButton: true
+                })
+            }
+            else {
+                toast.error(data.message, {
+                    duration: 1000,
+                    richColors: true,
+                    closeButton: true
+                })
+            }
+        }
+        catch (error) {
+            toast.error("Something went wrong", {
+                duration: 1000,
+                richColors: true,
+                closeButton: true
+            })
+        }
     }
     return (
         <div className='px-4 py-6 flex flex-col justify-between'>

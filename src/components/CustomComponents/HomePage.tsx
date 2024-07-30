@@ -14,11 +14,11 @@ import { useDispatch } from "react-redux";
 import { arrayType } from "@/lib/Types";
 const HomePage = () => {
     const dispatch = useDispatch()
-    const name: any = useSelector<RootState>((state) => state.appSlice.name);
-    const todos: arrayType[] | any = useSelector<RootState>((state) => state.appSlice.to_do as arrayType[])
-    const in_progress: arrayType[] | any = useSelector<RootState>((state) => state.appSlice.in_progress as arrayType[])
-    const under_review: arrayType[] | any = useSelector<RootState>((state) => state.appSlice.under_review as arrayType[])
-    const finished: arrayType[] | any = useSelector<RootState>((state) => state.appSlice.finished as arrayType[]);
+    const name: any = useSelector<RootState>((state) => state?.appSlice?.name);
+    const todos: arrayType[] | any = useSelector<RootState>((state) => state?.appSlice?.to_do as arrayType[])
+    const in_progress: arrayType[] | any = useSelector<RootState>((state) => state?.appSlice?.in_progress as arrayType[])
+    const under_review: arrayType[] | any = useSelector<RootState>((state) => state?.appSlice?.under_review as arrayType[])
+    const finished: arrayType[] | any = useSelector<RootState>((state) => state?.appSlice?.finished as arrayType[]);
     const onDragEnd = (Result: DropResult) => {
         const { destination, source, draggableId } = Result
         if (!destination) return;

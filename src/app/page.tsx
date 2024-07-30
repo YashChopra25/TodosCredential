@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <Provider store={store}>
       <HomePage />
-      <Toaster/>
+      <Toaster richColors/>
     </Provider>
   )
 }
