@@ -12,6 +12,9 @@ import { DragTask, removeTask } from "@/lib/features/app-slice";
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import { useDispatch } from "react-redux";
 import { arrayType } from "@/lib/Types";
+import { useEffect } from "react";
+import axios from "axios";
+import { toast } from "sonner";
 const HomePage = () => {
     const dispatch = useDispatch()
     const name: any = useSelector<RootState>((state) => state?.appSlice?.name);
@@ -19,6 +22,29 @@ const HomePage = () => {
     const in_progress: arrayType[] | any = useSelector<RootState>((state) => state?.appSlice?.in_progress as arrayType[])
     const under_review: arrayType[] | any = useSelector<RootState>((state) => state?.appSlice?.under_review as arrayType[])
     const finished: arrayType[] | any = useSelector<RootState>((state) => state?.appSlice?.finished as arrayType[]);
+
+
+    const FetchData = async () => {
+        try {
+            const { data } = await axios.get(`/api/get-data`);
+            console.log(data)
+            toast.success("Data fetch Successfully", {
+                richColors: true,
+                closeButton: true
+            })
+        } catch (error) {
+            toast.error("Failed to fetch Data", {
+                richColors: true,
+                closeButton: true
+            })
+        }
+    }
+
+    useEffect(() => {
+        FetchData()
+    }, [])
+
+
     const onDragEnd = (Result: DropResult) => {
         const { destination, source, draggableId } = Result
         if (!destination) return;
