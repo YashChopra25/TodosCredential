@@ -3,7 +3,7 @@ import axios, { isAxiosError } from "axios"
 export async function POST(req: NextRequest, res: NextResponse) {
     try {
         const { email, password } = await req.json()
-        const { data, status } = await axios.post(`${process.env.BACKEND_URL}api/v1/auth/signin`, {
+        const { data, status } = await axios.post(`${process.env.BACKEND_URL}/api/v1/auth/signin`, {
             email, password
         });
         const response = NextResponse.json({

@@ -3,7 +3,7 @@ import axios, { isAxiosError } from "axios"
 export async function POST(req: NextRequest, res: NextResponse) {
     try {
         const { email, password, name } = await req.json()
-        const { data, status } = await axios.post(`${process.env.BACKEND_URL}api/v1/auth/signup`, {
+        const { data, status } = await axios.post(`${process.env.BACKEND_URL}/api/v1/auth/signup`, {
             email, password, name
         });
         const response = NextResponse.json({
@@ -19,7 +19,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
         }
         return response;
     } catch (error) {
-
         if (isAxiosError(error)) {
             console.log((error.response?.statusText));
             const message = (error.response?.data?.message) || "Something went wrong"
