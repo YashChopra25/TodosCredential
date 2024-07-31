@@ -1,4 +1,4 @@
-import { createSlice, nanoid } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { arrayType, initialStateType } from "@/lib/Types";
 
 
@@ -34,7 +34,7 @@ export const appSlice = createSlice({
                 date: action.payload.deadline,
                 createdAt: "2024-06-25T10:36:24.860+00:00",
                 description: action.payload.description,
-                id: nanoid(),
+                id: action.payload._id,
                 priority: action.payload.priority,
                 status: "to_do",
                 title: action.payload.title
