@@ -10,11 +10,10 @@ export interface arrayType {
 export interface initialStateType {
     name: string,
     email: string,
-    to_do: arrayType[],
-    in_progress: arrayType[],
-    under_review: arrayType[],
-    finished: arrayType[],
-    token: string
+    to_do: arrayType[] | [],
+    in_progress: arrayType[] | [],
+    under_review: arrayType[] | [],
+    finished: arrayType[] | [],
 }
 export interface tododetailType {
     deadline: string | undefined;

@@ -23,6 +23,7 @@ import { useDispatch } from 'react-redux'
 import { addTask } from '@/lib/features/app-slice'
 import { toast } from 'sonner'
 import { tododetailType } from '@/lib/Types'
+import axios, { isAxiosError } from 'axios'
 
 
 const DrawerBody = ({ statusSelected = "Not Selected" }: { statusSelected?: string }) => {
@@ -34,6 +35,7 @@ const DrawerBody = ({ statusSelected = "Not Selected" }: { statusSelected?: stri
         title: ""
 
     })
+    const [isloading, setIsloading] = useState(false)
     const dispatch = useDispatch()
     const HandleOnChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -44,7 +46,6 @@ const DrawerBody = ({ statusSelected = "Not Selected" }: { statusSelected?: stri
         })
     }
     const HandleSubmit = async () => {
-        console.log(tododetail);
         if (tododetail.title.length == 0) {
             toast.error(`Title is mandatory field`, {
                 position: "top-right"
@@ -57,8 +58,38 @@ const DrawerBody = ({ statusSelected = "Not Selected" }: { statusSelected?: stri
             })
             return;
         }
-        console.log("bypass")
-        dispatch(addTask(tododetail))
+        try {
+            setIsloading(true)
+            const { data } = await axios.post("/api/add-data", tododetail);
+            if (!data.status) {
+                toast.error(`Task couldn't be added`, {
+                    richColors: true,
+                    closeButton: true,
+                    duration: 1000
+                })
+            }
+            dispatch(addTask(data.data))
+            toast.success(`Task added successfully`, {
+                richColors: true,
+                closeButton: true,
+                duration: 1000
+            })
+        } catch (error) {
+            if (isAxiosError(error)) {
+                toast.error(error.message, {
+                    richColors: true,
+                    closeButton: true,
+                    duration: 1000
+                })
+            }
+            toast.error("Something went wrong", {
+                richColors: true,
+                closeButton: true,
+                duration: 1000
+            })
+        } finally {
+            setIsloading(false)
+        }
     }
     return (
         <React.Fragment>
@@ -142,7 +173,8 @@ const DrawerBody = ({ statusSelected = "Not Selected" }: { statusSelected?: stri
                 </div>
             </div>
             <DrawerFooter>
-                <Button onClick={HandleSubmit}>Submit</Button>
+                <Button onClick={HandleSubmit}>{
+                    isloading ? "Submitting..." : "Submit"}</Button>
                 <DrawerClose asChild>
                     <Button variant="outline">Cancel</Button>
                 </DrawerClose>

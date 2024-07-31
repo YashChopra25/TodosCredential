@@ -8,11 +8,11 @@ import drawar from "@/../public/drawar.svg"
 import TodoCard from "@/components/CustomComponents/TodoCard";
 import { useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
-import { DragTask, removeTask } from "@/lib/features/app-slice";
+import { addinitialState, DragTask, removeTask } from "@/lib/features/app-slice";
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import { useDispatch } from "react-redux";
 import { arrayType } from "@/lib/Types";
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "sonner";
 const HomePage = () => {
@@ -22,16 +22,16 @@ const HomePage = () => {
     const in_progress: arrayType[] | any = useSelector<RootState>((state) => state?.appSlice?.in_progress as arrayType[])
     const under_review: arrayType[] | any = useSelector<RootState>((state) => state?.appSlice?.under_review as arrayType[])
     const finished: arrayType[] | any = useSelector<RootState>((state) => state?.appSlice?.finished as arrayType[]);
-
-
     const FetchData = async () => {
         try {
             const { data } = await axios.get(`/api/get-data`);
-            console.log(data)
-            toast.success("Data fetch Successfully", {
-                richColors: true,
-                closeButton: true
-            })
+            if (data.status) {
+                toast.success("Data fetch Successfully", {
+                    richColors: true,
+                    closeButton: true
+                })
+                dispatch(addinitialState(data.data));
+            }
         } catch (error) {
             toast.error("Failed to fetch Data", {
                 richColors: true,
@@ -40,20 +40,31 @@ const HomePage = () => {
         }
     }
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         FetchData()
     }, [])
 
-
-    const onDragEnd = (Result: DropResult) => {
+    const onDragEnd = async (Result: DropResult) => {
         const { destination, source, draggableId } = Result
         if (!destination) return;
         if (destination.droppableId === source.droppableId && destination.index === source.index) return
         if (destination.droppableId != source.droppableId) {
+            const { data } = await axios.patch(`api/update-data/${draggableId}`, {
+                statusChangeTo: destination.droppableId
+            })
+            if (!data.status) {
+                toast.error("Failed to update data", {
+                    richColors: true,
+                    closeButton: true,
+                    duration: 1000
+                })
+                return;
+            }
             dispatch(DragTask({ destination, source, draggableId }))
             dispatch(removeTask({ destination, source, draggableId }))
         }
     }
+
     return (
         <DragDropContext onDragEnd={onDragEnd}>
             <div className="flex w-auto min-h-screen ">
@@ -118,7 +129,7 @@ const HomePage = () => {
                                     </div>
                                     {
                                         todos?.map((todo: arrayType, index: number) => (
-                                            <TodoCard key={todo.id} createdAt={todo.createdAt} date={todo.date} id={todo.id} description={todo.description} priority={todo.priority} title={todo.title} index={index} />
+                                            <TodoCard key={todo?.id} createdAt={todo?.createdAt} date={todo?.date} id={todo?.id} description={todo?.description} priority={todo?.priority} title={todo?.title} index={index} />
                                         ))
                                     }
                                     {
@@ -143,7 +154,7 @@ const HomePage = () => {
                                         </div>
                                         {
                                             in_progress?.map((todo: arrayType, index: number) => (
-                                                <TodoCard key={todo.id} createdAt={todo.createdAt} date={todo.date} id={todo.id} description={todo.description} priority={todo.priority} title={todo.title} index={index} />
+                                                <TodoCard key={todo?.id} createdAt={todo?.createdAt} date={todo?.date} id={todo?.id} description={todo?.description} priority={todo?.priority} title={todo?.title} index={index} />
                                             ))
                                         }
                                         {
@@ -170,7 +181,7 @@ const HomePage = () => {
                                         </div>
                                         {
                                             under_review?.map((todo: arrayType, index: number) => (
-                                                <TodoCard key={todo.id} createdAt={todo.createdAt} date={todo.date} id={todo.id} description={todo.description} priority={todo.priority} title={todo.title} index={index} />
+                                                <TodoCard key={todo?.id} createdAt={todo?.createdAt} date={todo?.date} id={todo?.id} description={todo?.description} priority={todo?.priority} title={todo?.title} index={index} />
                                             ))
                                         }
                                         {
@@ -196,7 +207,7 @@ const HomePage = () => {
                                         </div>
                                         {
                                             finished?.map((todo: arrayType, index: number) => (
-                                                <TodoCard key={todo.id} createdAt={todo.createdAt} date={todo.date} id={todo.id} description={todo.description} priority={todo.priority} title={todo.title} index={index} />
+                                                <TodoCard key={todo?.id} createdAt={todo?.createdAt} date={todo?.date} id={todo?.id} description={todo?.description} priority={todo?.priority} title={todo?.title} index={index} />
                                             ))
                                         }
                                         {

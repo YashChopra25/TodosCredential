@@ -3,56 +3,12 @@ import { arrayType, initialStateType } from "@/lib/Types";
 
 
 const initialState: initialStateType = {
-    name: "Joe Gardner",
+    name: "",
     email: "",
-    to_do: [{
-        id: "789534904",
-        title: "Yash",
-        status: "to_do",
-        description: "Develop and integrate user authentication using email and password.",
-        priority: "urgent",
-        date: "2024-07-25T10:36:24.860+00:00",
-        createdAt: "2024-06-25T10:36:24.860+00:00"
-    }],
-    in_progress: [
-        {
-            id: "45675354",
-            title: "Implement User Authentication",
-            status: "in_progress",
-            description: "Develop and integrate user authentication using email and password.",
-            priority: "low",
-            date: "2024-07-25T10:36:24.860+00:00",
-            createdAt: "2024-07-25T10:36:24.860+00:00"
-        },
-        {
-            id: "456753",
-            title: "Implement User Authentication",
-            status: "in_progress",
-            description: "Develop and integrate user authentication using email and password.",
-            priority: "medium",
-            date: "2024-07-25T10:36:24.860+00:00",
-            createdAt: "2024-07-25T10:36:24.860+00:00"
-        },
-    ],
-    under_review: [{
-        id: "445675356",
-        title: "Implement User Authentication",
-        status: "under_review",
-        description: "Develop and integrate user authentication using email and password.",
-        priority: "urgent",
-        date: "2024-07-25T10:36:24.860+00:00",
-        createdAt: "2024-07-27T10:36:24.860+00:00"
-    }],
-    finished: [{
-        id: "456776553",
-        title: "Implement User Authentication",
-        status: "finished",
-        description: "Develop and integrate user authentication using email and password.",
-        priority: "medium",
-        date: "2024-07-25T10:36:24.860+00:00",
-        createdAt: "2024-07-29T10:36:24.860+22:00"
-    }],
-    token: ""
+    to_do: [],
+    in_progress: [],
+    under_review: [],
+    finished: [],
 }
 let ManupulateTodo: arrayType;
 export const appSlice = createSlice({
@@ -64,6 +20,14 @@ export const appSlice = createSlice({
         },
         removeName: (state, _) => {
             state.name = ""
+        },
+        addinitialState: (state, action) => {
+            state.name = action.payload.name
+            state.email = action.payload.email
+            state.to_do = action.payload?.to_do || []
+            state.in_progress = action.payload?.in_progress || []
+            state.under_review = action.payload?.under_review || []
+            state.finished = action.payload?.finished || []
         },
         addTask: (state, action) => {
             const NewTodo: arrayType = {
@@ -125,19 +89,38 @@ export const appSlice = createSlice({
                 default:
                     break;
             }
-            console.log(ManupulateTodo)
             switch (action.payload.destination.droppableId) {
                 case "to_do":
-                    state.to_do.splice(action.payload.destination.index, 0, ManupulateTodo)
+                    if (state.to_do.length > 0) {
+                        state.to_do?.splice(action.payload.destination.index, 0, ManupulateTodo)
+                    }
+                    else {
+                        state.to_do.push(ManupulateTodo)
+                    }
                     break;
                 case "in_progress":
-                    state.in_progress.splice(action.payload.destination.index, 0, ManupulateTodo)
+                    if (state.in_progress.length > 0) {
+                        state.in_progress?.splice(action.payload.destination.index, 0, ManupulateTodo)
+                    }
+                    else {
+                        state.in_progress.push(ManupulateTodo)
+                    }
                     break;
                 case "under_review":
-                    state.under_review.splice(action.payload.destination.index, 0, ManupulateTodo)
+                    if (state.under_review.length > 0) {
+                        state.under_review?.splice(action.payload.destination.index, 0, ManupulateTodo)
+                    }
+                    else {
+                        state.under_review.push(ManupulateTodo)
+                    }
                     break;
                 case "finished":
-                    state.finished.splice(action.payload.destination.index, 0, ManupulateTodo)
+                    if (state.finished.length > 0) {
+                        state.finished?.splice(action.payload.destination.index, 0, ManupulateTodo)
+                    }
+                    else {
+                        state.finished.push(ManupulateTodo)
+                    }
                     break;
 
                 default:
@@ -177,5 +160,5 @@ export const appSlice = createSlice({
     }
 })
 
-export const { addName, removeName, addTask, removeTask, DragTask } = appSlice.actions
+export const { addName, removeName, addTask, removeTask, DragTask, addinitialState } = appSlice.actions
 export default appSlice.reducer
