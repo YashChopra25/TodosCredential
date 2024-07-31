@@ -21,5 +21,5 @@ export interface tododetailType {
     priority: string;
     status: string
     title: string
-
+    date:string| undefined;
 }

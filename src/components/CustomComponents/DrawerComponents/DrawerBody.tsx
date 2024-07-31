@@ -32,7 +32,8 @@ const DrawerBody = ({ statusSelected = "Not Selected" }: { statusSelected?: stri
         priority: "Not Selected",
         deadline: "",
         description: "",
-        title: ""
+        title: "",
+        date:""
 
     })
     const [isloading, setIsloading] = useState(false)
@@ -151,7 +152,7 @@ const DrawerBody = ({ statusSelected = "Not Selected" }: { statusSelected?: stri
                                     onSelect={(deadline) => {
                                         settododetail((prev) => {
                                             return {
-                                                ...prev, deadline: deadline?.toLocaleDateString()
+                                                ...prev, deadline: deadline?.toLocaleDateString(),date:deadline?.toLocaleDateString()
                                             }
                                         })
                                     }}
