@@ -2,7 +2,7 @@ import { createSlice, nanoid } from "@reduxjs/toolkit";
 import { arrayType, initialStateType } from "@/lib/Types";
 
 
-const initialState: initialStateType = {
+const initialState: initialStateType | any= {
     name: "",
     email: "",
     to_do: [],
@@ -59,28 +59,28 @@ export const appSlice = createSlice({
         DragTask: (state, action) => {
             switch (action.payload.source.droppableId) {
                 case "to_do":
-                    state.to_do.map((item) => {
+                    state.to_do.map((item: arrayType) => {
                         if (item.id === action.payload.draggableId) {
                             ManupulateTodo = { ...item }
                         }
                     });
                     break;
                 case "in_progress":
-                    state.in_progress.map((item) => {
+                    state.in_progress.map((item: arrayType) => {
                         if (item.id === action.payload.draggableId) {
                             ManupulateTodo = { ...item }
                         }
                     });
                     break;
                 case "under_review":
-                    state.under_review.map((item) => {
+                    state.under_review.map((item: arrayType) => {
                         if (item.id === action.payload.draggableId) {
                             ManupulateTodo = { ...item }
                         }
                     });
                     break;
                 case "finished":
-                    state.finished.map((item) => {
+                    state.finished.map((item: arrayType) => {
                         if (item.id === action.payload.draggableId) {
                             ManupulateTodo = { ...item }
                         }
@@ -130,23 +130,23 @@ export const appSlice = createSlice({
         removeTask: (state, action) => {
             switch (action.payload.source.droppableId) {
                 case "to_do":
-                    state.to_do = state.to_do.filter((item) => {
+                    state.to_do = state.to_do.filter((item: { id: any; }) => {
                         return item.id !== action.payload.draggableId
                     });
                     break;
                 case "in_progress":
-                    state.in_progress = state.in_progress.filter((item) => {
+                    state.in_progress = state.in_progress.filter((item: { id: any; }) => {
                         return item.id !== action.payload.draggableId
                     });
                     break;
                 case "under_review":
-                    state.under_review = state.under_review.filter((item) => {
+                    state.under_review = state.under_review.filter((item: { id: any; }) => {
 
                         return item.id !== action.payload.draggableId
                     });
                     break;
                 case "finished":
-                    state.finished = state.finished.filter((item) => {
+                    state.finished = state.finished.filter((item: arrayType) => {
                         if (item.id == action.payload.draggableId) {
                             ManupulateTodo = { ...item };
                         }
