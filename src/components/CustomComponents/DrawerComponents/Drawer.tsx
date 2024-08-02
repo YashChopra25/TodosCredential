@@ -21,7 +21,7 @@ const DrawerComponent = ({ children, statusSelected = "Not Selected" }: { childr
             <DrawerTrigger asChild>
                 {children}
             </DrawerTrigger>
-            <DrawerContent className='h-screen top-0 right-0 left-auto mt-0 rounded-none w-[500px]'>
+            <DrawerContent className='h-screen top-0 right-0 left-auto mt-0 rounded-none w-[500px] overflow-y-auto'>
                 <div className="w-full px-6 py-4 flex flex-col gap-7">
                     {/* Top header  */}
                     <div >
