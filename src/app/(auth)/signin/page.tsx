@@ -75,7 +75,7 @@ const SignIn = () => {
     return (
         <Wrapper>
             <div className='bg-white p-[60px] flex flex-col gap-6 border border-black shadow-md rounded-xl'>
-                <h1 className='font-semibold text-5xl'>Welcome to <span className='text-[#4534AC]'>Workflo!</span></h1>
+                <h1 className='font-semibold text-5xl'>Welcome to <span className='text-[#4534AC]'>Dragging</span></h1>
                 <form onSubmit={FormSubmitHandler} className='flex flex-col gap-6'>
                     <input type="text" id="email" value={credential.email} name="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#999999] focus:border-[#999999] focus:outline-none block w-full p-2.5 " placeholder="Your email" onChange={HandleOnChangeCredential} />
                     <div className='relative'>
