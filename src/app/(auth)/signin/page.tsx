@@ -13,8 +13,8 @@ const SignIn = () => {
     const [showPassword, setshowPassword] = useState(false);
     const [isloading, setIsloading] = useState(false);
     const [credential, setCredential] = useState({
-        email: "",
-        password: ""
+        email: "test@gmail.com",
+        password: "123456789"
     })
     const router = useRouter()
     const isCredentialProvided = (credential.email.trim().length == 0 || credential.password.trim().length == 0) ? true : false
@@ -82,6 +82,7 @@ const SignIn = () => {
                         <input type={showPassword ? "text" : "password"} id="password" name="password" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#999999] focus:border-[#999999] focus:outline-none block w-full p-2.5 pr-11" placeholder="Password" value={credential.password} onChange={HandleOnChangeCredential} />
                         <div className="absolute right-0 top-0 z-30 inset-y-1 flex items-center pr-3 cursor-pointer"><Image src={showPassword ? CloseEye : Eye} alt={showPassword ? "CloseEye" : "Eye"} onClick={() => { setshowPassword((pre) => !pre) }} /></div>
                     </div>
+                    <p>Adding default password for the checking purpose</p>
                     <Button className={`${isCredentialProvided ? "bg-[#9C93D4]" : "bg-[#4B36CC]"} hover:bg-[#4B36CC]`} type='submit' disabled={isCredentialProvided}>{
                         isloading ? "Logging...."
                             : "Login"
