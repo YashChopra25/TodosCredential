@@ -77,7 +77,7 @@ const Signup = () => {
     return (
         <Wrapper>
             <div className='bg-white p-[60px] flex flex-col gap-6 border border-black shadow-md rounded-xl'>
-                <h1 className='font-semibold text-5xl'>Welcome to <span className='text-[#4534AC]'>Workflo!</span></h1>
+                <h1 className='font-semibold text-5xl'>Welcome to <span className='text-[#4534AC]'>Dragging</span></h1>
                 <form className='flex flex-col gap-6' onSubmit={FormSubmitHandler}>
                     <input type="text" id="name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#999999] focus:border-[#999999] focus:outline-none block w-full p-2.5 " placeholder="Your name" name='name' value={credential.name} onChange={HandleOnChangeCredential} />
                     <input type="text" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#999999] focus:border-[#999999] focus:outline-none block w-full p-2.5 " placeholder="Your email" name='email' value={credential.email} onChange={HandleOnChangeCredential} />
